@@ -6,7 +6,7 @@ A minimal, human-readable standard for describing split-panel screen layouts, su
 
 ## Overview
 
-A layout is composed of named **panels** arranged by **splits**. Splits are either horizontal (side by side) or vertical (stacked). Parentheses group expressions and allow size ratios to be applied.
+A layout is composed of named **panels** arranged by **splits**. Every split must be wrapped in parentheses. This makes layouts unambiguous and straightforward to parse.
 
 ---
 
@@ -27,24 +27,24 @@ sidebar
 `|` splits panels horizontally (left and right):
 
 ```
-left|right
+(left|right)
 ```
 
 `/` splits panels vertically (top and bottom):
 
 ```
-top/bottom
+(top/bottom)
 ```
 
-### Grouping
+All splits must be parenthesized. `left|right` is invalid; `(left|right)` is correct.
 
-Parentheses group a sub-layout, controlling evaluation order. They are required when mixing split operators.
+### Nesting
+
+Groups may be nested freely:
 
 ```
-editor|(terminal/files)
+(editor|(terminal/files))
 ```
-
-Without parentheses, `editor|terminal/files` is ambiguous and invalid.
 
 ### Ratios
 
@@ -52,12 +52,10 @@ Append `=ratio` to a group to control how space is divided among its panels. The
 
 ```
 (left|right)=2:1
-(editor|(terminal/files))=3:1
+(editor|(terminal/files)=2:1)=3:1
 ```
 
 If no ratio is specified, equal division is assumed — equivalent to `1:1:...:1`.
-
-Ratios require a group. `left|right=2:1` is invalid; use `(left|right)=2:1`.
 
 ---
 
@@ -73,11 +71,23 @@ A ratio value may be one of three forms:
 
 Fixed and percentage values are allocated first. Ratio units then divide whatever space remains.
 
-### Examples
+---
 
-Equal split (implicit):
+## Examples
+
+Equal horizontal split:
 ```
-left|right
+(left|right)
+```
+
+Equal vertical split:
+```
+(top/bottom)
+```
+
+Nested splits:
+```
+(editor|(terminal/files))
 ```
 
 Unequal split:
@@ -110,18 +120,16 @@ Nested layout with ratios at each level:
 ## Grammar
 
 ```
-layout     = group | split
-group      = "(" split ")" [ "=" ratio ]
-split      = expr (operator expr)*
-expr       = panel | group
-operator   = "|" | "/"
-panel      = word
-ratio      = value (":" value)*
-value      = number | number unit
-unit       = "col" | "row" | "%"
+layout   = panel | group
+group    = "(" layout (operator layout)+ ")" [ "=" ratio ]
+operator = "|" | "/"
+panel    = word
+ratio    = value (":" value)*
+value    = number | number unit
+unit     = "col" | "row" | "%"
 ```
 
-Mixing `|` and `/` within a single split expression (without grouping) is invalid.
+A layout is either a bare panel name or a parenthesized group. Mixing `|` and `/` within a single group is invalid.
 
 ---
 
@@ -130,4 +138,4 @@ Mixing `|` and `/` within a single split expression (without grouping) is invali
 - **All-fixed splits** — if every value in a ratio is fixed or percentage, leftover space is unused and overflow extends past the available area. Implementations are not required to handle this gracefully.
 - **Panel names** — any word that does not contain `|`, `/`, `(`, `)`, `=`, or `:`. Case-sensitive.
 - **Ratios are scoped** — a `=ratio` annotation applies only to the split directly inside its group, not to nested splits.
-- **Default ratio** — an unannotated split is equal across all its panels.
+- **Default ratio** — an unannotated group divides space equally across all its direct children.
