@@ -17,6 +17,9 @@
   --color-code-bg: #f5f5f5;
   --color-error: #dc2626;
 
+  /* Panel text */
+  --color-text-panel: #000;
+
   /* Panel colors for playground — bright and vivid */
   --panel-1: #93c5fd;
   --panel-2: #86efac;

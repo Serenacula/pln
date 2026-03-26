@@ -62,7 +62,7 @@ function RenderItem({ item }: { item: Item }) {
           justifyContent: "center",
           fontFamily: "var(--font-mono)",
           fontSize: "0.75rem",
-          color: "var(--color-text-muted)",
+          color: "var(--color-text-panel)",
           minWidth: 0,
           minHeight: 0,
           overflow: "hidden",
