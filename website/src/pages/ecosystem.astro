@@ -1,0 +1,170 @@
+---
+import Base from '../layouts/Base.astro';
+
+const projects = [
+  {
+    name: 'pln-parse',
+    description: 'CLI parser and validator',
+    language: 'Rust',
+    status: 'Published',
+    url: 'https://crates.io/crates/pln-parse',
+  },
+  {
+    name: 'pln-kitty',
+    description: 'Kitty terminal plugin',
+    language: 'Python',
+    status: 'Planned',
+    url: null,
+  },
+  {
+    name: 'pln-tmux',
+    description: 'tmux plugin',
+    language: 'Shell',
+    status: 'Planned',
+    url: null,
+  },
+  {
+    name: 'pln-zellij',
+    description: 'Zellij plugin',
+    language: 'Rust',
+    status: 'Planned',
+    url: null,
+  },
+  {
+    name: 'pln-nvim',
+    description: 'Neovim plugin',
+    language: 'Lua',
+    status: 'Planned',
+    url: null,
+  },
+  {
+    name: 'pln-css',
+    description: 'PLN to CSS Grid converter',
+    language: 'TypeScript',
+    status: 'Planned',
+    url: null,
+  },
+];
+---
+
+<Base title="Ecosystem - PLN" description="Implementations and integrations for Panel Layout Notation.">
+  <div class="content">
+    <h1>Ecosystem</h1>
+    <p class="intro">
+      PLN is designed to be implemented across many tools. One notation, many environments.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Description</th>
+          <th>Language</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {projects.map(project => (
+          <tr>
+            <td>
+              {project.url
+                ? <a href={project.url}>{project.name}</a>
+                : <span>{project.name}</span>
+              }
+            </td>
+            <td>{project.description}</td>
+            <td>{project.language}</td>
+            <td><span class:list={['status', project.status.toLowerCase()]}>{project.status}</span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+
+    <section class="contribute">
+      <h2>Building an implementation?</h2>
+      <p>
+        If you're building a PLN integration, the <a href="https://crates.io/crates/pln-parse">pln-parse</a> crate
+        can be used as a library dependency in Rust projects, or its JSON output can be consumed by any language.
+      </p>
+      <pre><code>echo '(editor=3fr|(terminal=2fr/files))' | pln-parse --pretty</code></pre>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .content {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .intro {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 3rem;
+  }
+
+  th, td {
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+  }
+
+  th {
+    background: var(--color-bg-alt);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  td {
+    font-size: 0.9rem;
+  }
+
+  .status {
+    font-size: 0.8rem;
+    padding: 0.15em 0.5em;
+    border-radius: 4px;
+  }
+
+  .status.published {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  .status.planned {
+    background: var(--color-bg-alt);
+    color: var(--color-text-muted);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .status.published {
+      background: #14532d;
+      color: #86efac;
+    }
+  }
+
+  .contribute {
+    border-top: 1px solid var(--color-border);
+    padding-top: 2rem;
+  }
+
+  .contribute h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .contribute p {
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
+  }
+</style>

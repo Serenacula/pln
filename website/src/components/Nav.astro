@@ -1,0 +1,67 @@
+---
+const currentPath = Astro.url.pathname;
+const base = import.meta.env.BASE_URL;
+
+const links = [
+  { href: `${base}/`, label: 'PLN' },
+  { href: `${base}/specification`, label: 'Specification' },
+  { href: `${base}/playground`, label: 'Playground' },
+  { href: `${base}/ecosystem`, label: 'Ecosystem' },
+];
+---
+
+<nav>
+  <div class="nav-inner">
+    {links.map(link => (
+      <a
+        href={link.href}
+        class:list={[{ active: currentPath === link.href || currentPath === link.href + '/' }]}
+      >
+        {link.label}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    height: var(--nav-height);
+  }
+
+  .nav-inner {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 1.5rem;
+  }
+
+  a {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  a:first-child {
+    font-weight: 700;
+    color: var(--color-text);
+    margin-right: auto;
+  }
+
+  a:hover {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  a.active {
+    color: var(--color-accent);
+  }
+</style>

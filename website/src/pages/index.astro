@@ -1,0 +1,261 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<Base title="Panel Layout Notation">
+  <section class="hero">
+    <h1>Panel Layout Notation</h1>
+    <p class="subtitle">
+      A minimal, human-readable notation for describing split-panel layouts.
+      One line of text defines complex arrangements of panels with sizing, nesting, and named regions.
+    </p>
+
+    <div class="example">
+      <pre><code>((files=20% | editor1 | editor2)=3fr / terminal)</code></pre>
+      <div class="preview">
+        <div class="v-split">
+          <div class="h-split" style="flex: 3">
+            <div class="panel p1" style="flex: 0 0 20%">files</div>
+            <div class="panel p2" style="flex: 1">editor1</div>
+            <div class="panel p3" style="flex: 1">editor2</div>
+          </div>
+          <div class="panel p4" style="flex: 1">terminal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ctas">
+      <a href={`${base}/specification`} class="btn primary">Read the spec</a>
+      <a href={`${base}/playground`} class="btn">Try the playground</a>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <h3>Simple syntax</h3>
+      <p>
+        Panels are named, splits use <code>|</code> (horizontal) and <code>/</code> (vertical),
+        and sizes are appended with <code>=</code>. That's it.
+      </p>
+    </div>
+    <div class="feature">
+      <h3>Flexible sizing</h3>
+      <p>
+        Ratios (<code>2fr</code>), fixed units (<code>80col</code>, <code>24row</code>, <code>200px</code>),
+        and percentages (<code>25%</code>) can be mixed freely.
+      </p>
+    </div>
+    <div class="feature">
+      <h3>Tool-agnostic</h3>
+      <p>
+        One notation for terminals, editors, tiling window managers, and web UIs.
+        Define your layout once, use it everywhere.
+      </p>
+    </div>
+  </section>
+
+  <section class="quick-examples">
+    <h2>Quick examples</h2>
+    <div class="examples-grid">
+      <div class="example-card">
+        <code>(left | right)</code>
+        <div class="mini-preview">
+          <div class="h-split">
+            <div class="panel p1">left</div>
+            <div class="panel p2">right</div>
+          </div>
+        </div>
+      </div>
+      <div class="example-card">
+        <code>(top / bottom)</code>
+        <div class="mini-preview">
+          <div class="v-split">
+            <div class="panel p1">top</div>
+            <div class="panel p2">bottom</div>
+          </div>
+        </div>
+      </div>
+      <div class="example-card">
+        <code>(sidebar=80col | main)</code>
+        <div class="mini-preview">
+          <div class="h-split">
+            <div class="panel p1" style="flex: 0 0 30%">sidebar</div>
+            <div class="panel p2" style="flex: 1">main</div>
+          </div>
+        </div>
+      </div>
+      <div class="example-card">
+        <code>(editor | (terminal / files))</code>
+        <div class="mini-preview">
+          <div class="h-split">
+            <div class="panel p1">editor</div>
+            <div class="v-split" style="flex: 1">
+              <div class="panel p2">terminal</div>
+              <div class="panel p3">files</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 4rem 1.5rem 2rem;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-muted);
+    max-width: 36rem;
+    margin: 0.75rem auto 2rem;
+  }
+
+  .example {
+    max-width: 32rem;
+    margin: 0 auto 2rem;
+  }
+
+  .example pre {
+    margin-bottom: 0.75rem;
+    text-align: left;
+  }
+
+  .preview {
+    height: 10rem;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .ctas {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    transition: all 0.15s;
+  }
+
+  .btn:hover {
+    text-decoration: none;
+    border-color: var(--color-accent);
+  }
+
+  .btn.primary {
+    background: var(--color-accent);
+    color: white;
+    border-color: var(--color-accent);
+  }
+
+  .btn.primary:hover {
+    background: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+  }
+
+  /* Features */
+  .features {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature h3 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .feature p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
+  /* Quick examples */
+  .quick-examples {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .quick-examples h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+  }
+
+  .example-card {
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 0.75rem;
+  }
+
+  .example-card code {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .mini-preview {
+    height: 6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  /* Shared layout rendering */
+  .h-split {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+  }
+
+  .v-split {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+  }
+
+  .panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    flex: 1;
+  }
+
+  .p1 { background: var(--panel-1); }
+  .p2 { background: var(--panel-2); }
+  .p3 { background: var(--panel-3); }
+  .p4 { background: var(--panel-4); }
+</style>
