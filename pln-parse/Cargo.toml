@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 description = "Parser and CLI for Panel Layout Notation (PLN)"
 license = "MIT"
-repository = "https://github.com/serenacula/pln"
+repository = "https://github.com/Serenacula/panel-layout-notation"
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }
