@@ -44,4 +44,4 @@ PLN is designed to be implemented across many tools. Planned integrations includ
 
 ## License
 
-TBD
+[MIT](LICENSE)
