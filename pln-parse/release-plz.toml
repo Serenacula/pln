@@ -1,0 +1,6 @@
+[workspace]
+git_tag_enable = true
+git_release_enable = true
+publish = true
+release_always = true
+changelog_update = true
