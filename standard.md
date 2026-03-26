@@ -6,7 +6,7 @@ A minimal, human-readable standard for describing split-panel screen layouts, su
 
 ## Overview
 
-A layout is composed of named **panels** arranged by **splits**. Every split must be wrapped in parentheses. This makes layouts unambiguous and straightforward to parse.
+A layout is composed of named **panels** arranged by **splits**. Every split must be wrapped in parentheses. Each panel or group may carry an optional size annotation; unmarked panels default to a size of `1`.
 
 ---
 
@@ -46,22 +46,20 @@ Groups may be nested freely:
 (editor|(terminal/files))
 ```
 
-### Ratios
+### Sizes
 
-Append `=ratio` to a group to control how space is divided among its panels. The ratio contains one value per panel, separated by `:`.
+Append `=value` to any panel or group to set its size within the enclosing split. Panels without a size annotation default to `1`.
 
 ```
-(left|right)=2:1
-(editor|(terminal/files)=2:1)=3:1
+(left=2|right)
+(editor=3|(terminal=2/files))
 ```
-
-If no ratio is specified, equal division is assumed — equivalent to `1:1:...:1`.
 
 ---
 
 ## Size Values
 
-A ratio value may be one of three forms:
+A size value may be one of three forms:
 
 | Form | Example | Meaning |
 |------|---------|---------|
@@ -92,27 +90,27 @@ Nested splits:
 
 Unequal split:
 ```
-(left|right)=2:1
+(left=2|right)
 ```
 
 Fixed sidebar, flexible main area:
 ```
-(sidebar|main)=80col:1
+(sidebar=80col|main)
 ```
 
 Three-way split with fixed outer panels:
 ```
-(nav|content|panel)=60col:1:40col
+(nav=60col|content|panel=40col)
 ```
 
 Percentage-based split:
 ```
-(left|right)=30%:1
+(left=30%|right)
 ```
 
-Nested layout with ratios at each level:
+Nested layout with sizes at each level:
 ```
-(editor|(terminal/files)=2:1)=3:1
+(editor=3|(terminal=2/files))
 ```
 
 ---
@@ -121,10 +119,10 @@ Nested layout with ratios at each level:
 
 ```
 layout   = panel | group
-group    = "(" layout (operator layout)+ ")" [ "=" ratio ]
+group    = "(" item (operator item)+ ")"
+item     = layout [ "=" value ]
 operator = "|" | "/"
 panel    = word
-ratio    = value (":" value)*
 value    = number | number unit
 unit     = "col" | "row" | "%"
 ```
@@ -135,7 +133,7 @@ A layout is either a bare panel name or a parenthesized group. Mixing `|` and `/
 
 ## Implementation Notes
 
-- **All-fixed splits** — if every value in a ratio is fixed or percentage, leftover space is unused and overflow extends past the available area. Implementations are not required to handle this gracefully.
+- **Default size** — any panel or group without a `=value` annotation has an implicit size of `1`.
+- **All-fixed splits** — if every item in a split has a fixed or percentage size, leftover space is unused and overflow extends past the available area. Implementations are not required to handle this gracefully.
 - **Panel names** — any word that does not contain `|`, `/`, `(`, `)`, `=`, or `:`. Case-sensitive.
-- **Ratios are scoped** — a `=ratio` annotation applies only to the split directly inside its group, not to nested splits.
-- **Default ratio** — an unannotated group divides space equally across all its direct children.
+- **Sizes are scoped** — a `=value` annotation on a group affects only its size within its parent split, not the relative sizes of its own children.
