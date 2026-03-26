@@ -1,5 +1,7 @@
 # Panel Layout Notation (PLN)
 
+**Spec version: 0.5.0**
+
 A minimal, human-readable standard for describing split-panel screen layouts, suitable for terminals, editors, and similar environments.
 
 ---
