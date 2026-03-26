@@ -26,7 +26,7 @@ A standard IDE layout -- file tree, two editors, and a terminal:
 
 ## Repository contents
 
-- [`standard.md`](standard.md) -- the PLN specification (v1)
+- [`standard.md`](standard.md) -- the PLN specification
 - [`CHANGELOG.md`](CHANGELOG.md) -- version history
 
 ## Ecosystem

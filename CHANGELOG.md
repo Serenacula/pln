@@ -4,7 +4,12 @@ All notable changes to the PLN specification will be documented in this file.
 
 This project follows [Semantic Versioning](https://semver.org/) and the format is based on [Keep a Changelog](https://keepachangelog.com/).
 
-## [1.0.0] - 2026-03-26
+## [0.5.0] - 2026-03-26
+
+### Added
+- Single-item groups: `(panel)` is valid and equivalent to `panel`, allowing `(panel=2fr)` for sizing a standalone panel
+
+## [0.4.0] - 2026-03-26
 
 ### Added
 - Formal grammar definition

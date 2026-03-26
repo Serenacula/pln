@@ -39,7 +39,7 @@ terminal
 (top / bottom)
 ```
 
-All splits must be parenthesized. `left|right` is invalid; `(left|right)` is correct. Whitespace between tokens is ignored.
+All splits must be parenthesized. `left|right` is invalid; `(left|right)` is correct. Parentheses around a single item are permitted but optional — `panel` and `(panel)` are equivalent. Whitespace between tokens is ignored.
 
 ### Nesting
 
@@ -123,6 +123,16 @@ Standard IDE layout (sidebar, two editors, terminal below):
 ((files=20% | editor1 | editor2)=3fr / terminal)
 ```
 
+Single-item group (equivalent to bare `panel`):
+```
+(panel)
+```
+
+Sized single panel:
+```
+(panel=2fr)
+```
+
 Quoted panel names:
 ```
 ("Left Panel"=2fr | "Right Panel")
@@ -135,8 +145,8 @@ Quoted panel names:
 ```
 layout   = panel | group
 group    = hgroup | vgroup
-hgroup   = "(" item ("|" item)+ ")"
-vgroup   = "(" item ("/" item)+ ")"
+hgroup   = "(" item ("|" item)* ")"
+vgroup   = "(" item ("/" item)* ")"
 item     = layout [ "=" value ]
 panel    = word | quoted
 word     = [^\s|/()="']+
@@ -147,7 +157,7 @@ number   = [0-9]+ ("." [0-9]+)?
 unit     = "fr" | "col" | "row" | "px" | "%"
 ```
 
-Whitespace between tokens is ignored. A layout is either a bare panel name or a parenthesized group. Each group may only contain one operator type — horizontal (`|`) or vertical (`/`) — never both.
+Whitespace between tokens is ignored. A layout is either a bare panel name or a parenthesized group. A group with no operator is a single-item group — equivalent to the item itself, but allowing a size annotation such as `(panel=2fr)`. Each group with operators may only contain one operator type — horizontal (`|`) or vertical (`/`) — never both.
 
 ---
 
