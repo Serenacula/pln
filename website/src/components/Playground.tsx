@@ -4,7 +4,7 @@ import type { Item } from "../lib/types";
 import LayoutRenderer from "./LayoutRenderer";
 
 const EXAMPLES = [
-  { label: "Simple split", value: "(left | right)" },
+  { label: "Horizontal split", value: "(left | right)" },
   { label: "Vertical split", value: "(top / bottom)" },
   { label: "Nested", value: "(editor | (terminal / files))" },
   { label: "Unequal split", value: "(left=2fr | right)" },

@@ -17,15 +17,15 @@
   --color-code-bg: #f5f5f5;
   --color-error: #dc2626;
 
-  /* Panel colors for playground */
-  --panel-1: #dbeafe;
-  --panel-2: #dcfce7;
-  --panel-3: #fef3c7;
-  --panel-4: #fce7f3;
-  --panel-5: #e0e7ff;
-  --panel-6: #d1fae5;
-  --panel-7: #fed7aa;
-  --panel-8: #e9d5ff;
+  /* Panel colors for playground — bright and vivid */
+  --panel-1: #93c5fd;
+  --panel-2: #86efac;
+  --panel-3: #fde047;
+  --panel-4: #f9a8d4;
+  --panel-5: #a5b4fc;
+  --panel-6: #6ee7b7;
+  --panel-7: #fdba74;
+  --panel-8: #c4b5fd;
 
   /* Typography */
   --font-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -47,14 +47,14 @@
     --color-border: #333;
     --color-code-bg: #1e1e1e;
 
-    --panel-1: #1e3a5f;
-    --panel-2: #1a3d2e;
-    --panel-3: #3d3520;
-    --panel-4: #3d1f33;
-    --panel-5: #2a2d5e;
-    --panel-6: #1a3d32;
-    --panel-7: #3d2e1a;
-    --panel-8: #2d1f4e;
+    --panel-1: #2563eb;
+    --panel-2: #16a34a;
+    --panel-3: #ca8a04;
+    --panel-4: #db2777;
+    --panel-5: #4f46e5;
+    --panel-6: #059669;
+    --panel-7: #ea580c;
+    --panel-8: #7c3aed;
   }
 }
 

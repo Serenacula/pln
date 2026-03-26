@@ -23,6 +23,8 @@ function nextColor(): string {
   return color;
 }
 
+// Scale col/row to a 100x25 terminal grid relative to the container
+// Using percentages so they adapt to any preview size
 function sizeToFlex(size?: Size): string {
   if (!size) return "1";
   switch (size.unit) {
@@ -33,9 +35,9 @@ function sizeToFlex(size?: Size): string {
     case "px":
       return `0 0 ${size.value}px`;
     case "col":
-      return `0 0 ${size.value * 8}px`; // approximate col width
+      return `0 0 ${size.value}%`; // 1 col = 1% of width (100-col terminal)
     case "row":
-      return `0 0 ${size.value * 20}px`; // approximate row height
+      return `0 0 ${size.value * 4}%`; // 1 row = 4% of height (25-row terminal)
   }
 }
 
