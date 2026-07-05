@@ -1,8 +1,8 @@
 # Panel Layout Notation (PLN)
 
-**Spec version: 0.5.0**
+**Spec version: 0.6.0**
 
-A minimal, human-readable standard for describing split-panel screen layouts, suitable for terminals, editors, and similar environments.
+A minimal standard for describing split-panel screen layouts, suitable for terminals, editors, and similar environments.
 
 ---
 
@@ -66,13 +66,13 @@ Append `=value` to any panel or group to set its size within the enclosing split
 
 A size value may be one of five forms:
 
-| Form | Example | Meaning |
-|------|---------|---------|
-| Ratio | `1fr`, `2fr` | A relative share of the remaining space after fixed values are allocated |
-| Fixed column | `80col` | A fixed number of columns; valid only in `\|` (horizontal) splits |
-| Fixed row | `24row` | A fixed number of rows; valid only in `/` (vertical) splits |
-| Pixel | `200px` | A fixed number of pixels. Implementations that use discrete cells (e.g. terminals) should round down to the nearest cell boundary |
-| Percentage | `25%` | A percentage of the total available space |
+| Form         | Example      | Meaning                                                                  |
+| ------------ | ------------ | ------------------------------------------------------------------------ |
+| Ratio        | `1fr`, `2fr` | A relative share of the remaining space after fixed values are allocated |
+| Fixed column | `80col`      | A fixed number of columns; valid only in `\|` (horizontal) splits        |
+| Fixed row    | `24row`      | A fixed number of rows; valid only in `/` (vertical) splits              |
+| Pixel        | `200px`      | A fixed number of pixels                                                 |
+| Percentage   | `25%`        | A percentage of the total available space                                |
 
 Fixed, pixel, and percentage values are allocated first. Ratio units then divide whatever space remains.
 
@@ -81,61 +81,73 @@ Fixed, pixel, and percentage values are allocated first. Ratio units then divide
 ## Examples
 
 Equal horizontal split:
+
 ```
 (left|right)
 ```
 
 Equal vertical split:
+
 ```
 (top/bottom)
 ```
 
 Nested splits:
+
 ```
 (editor|(terminal/files))
 ```
 
 Unequal split:
+
 ```
 (left=2fr|right)
 ```
 
 Fixed sidebar, flexible main area:
+
 ```
 (sidebar=80col|main)
 ```
 
 Three-way split with fixed outer panels:
+
 ```
 (nav=60col|content|panel=40col)
 ```
 
 Percentage-based split:
+
 ```
 (left=30%|right)
 ```
 
 Nested layout with sizes at each level:
+
 ```
 (editor=3fr|(terminal=2fr/files))
 ```
 
 Standard IDE layout (sidebar, two editors, terminal below):
+
 ```
 ((files=20% | editor1 | editor2)=3fr / terminal)
 ```
 
 Single-item group (equivalent to bare `panel`):
+
 ```
 (panel)
 ```
 
 Sized single panel:
+
 ```
 (panel=2fr)
 ```
 
 Quoted panel names:
+
 ```
 ("Left Panel"=2fr | "Right Panel")
 ```
@@ -144,22 +156,19 @@ Quoted panel names:
 
 ## Grammar
 
-```
-layout   = panel | group
-group    = hgroup | vgroup
-hgroup   = "(" item ("|" item)* ")"
-vgroup   = "(" item ("/" item)* ")"
-item     = layout [ "=" value ]
-panel    = word | quoted
-word     = [^\s|/()="']+
-quoted   = "\"" ([^"\\] | "\\\"")* "\""
-         | "'"  ([^'\\] | "\\'")* "'"
-value    = number unit
-number   = [0-9]+ ("." [0-9]+)?
-unit     = "fr" | "col" | "row" | "px" | "%"
-```
+| Rule   | Description                                                                | Example                        |
+| ------ | -------------------------------------------------------------------------- | ------------------------------ |
+| item   | A **panel** or a **group**, optionally followed by `=` and a **size**      | `editor=80col`, `(a \| b)=2fr` |
+| group  | An **hgroup** or a **vgroup**                                              | `(a \| b)`, `(a / b)`          |
+| hgroup | One or more **item**s separated by `\|`, surrounded by `(` parentheses `)` | `(left \| middle \| right)`    |
+| vgroup | One or more **item**s separated by `/`, surrounded by `(` parentheses `)`  | `(top / middle / bottom)`      |
+| panel  | A **word** or a **quoted** string                                          | `editor`, `"my panel"`         |
+| word   | One or more characters, excluding `whitespace` and `\| / ( ) = " '`        | `sidebar`, `file-tree`         |
+| quoted | A string in matching `"` or `'` delimiters; `\` escapes the delimiter      | `"Left Panel"`                 |
+| size   | A number (integer or decimal) followed by a **unit**                       | `2fr`, `80col`, `33.3%`        |
+| unit   | One of: `fr`, `col`, `row`, `px`, `%`                                      | `fr`, `px`                     |
 
-Whitespace between tokens is ignored. A layout is either a bare panel name or a parenthesized group. A group with no operator is a single-item group — equivalent to the item itself, but allowing a size annotation such as `(panel=2fr)`. Each group with operators may only contain one operator type — horizontal (`|`) or vertical (`/`) — never both.
+Whitespace between tokens is ignored. Each group with operators may only contain one operator type, horizontal (`|`) or vertical (`/`), never both. Single item groups, such as `(item)`, are valid and functionally identical to a panel.
 
 ---
 
@@ -172,3 +181,4 @@ Whitespace between tokens is ignored. A layout is either a bare panel name or a 
 - **Panel names** — bare names may not contain whitespace or special characters (`|`, `/`, `(`, `)`, `=`, `"`, `'`). Quoted names may contain any character. Names are case-sensitive.
 - **Duplicate names** — whether duplicate panel names within a layout are permitted is implementation-defined.
 - **Sizes are scoped** — a `=value` annotation on a group affects only its size within its parent split, not the relative sizes of its own children.
+- **Empty strings** — whether empty strings such as `""` are permitted is implementation-defined.
