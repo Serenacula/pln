@@ -4,6 +4,15 @@ All notable changes to the PLN specification will be documented in this file.
 
 This project follows [Semantic Versioning](https://semver.org/) and the format is based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.6.0] - 2026-07-05
+
+### Added
+- Implementation note: reserved panel-name vocabularies — implementations with fixed UI regions may map a documented set of names onto those regions
+- Implementation note: empty-string panel names (`""`) are implementation-defined
+
+### Changed
+- Grammar rewritten as a descriptive table for readability (previously EBNF-style)
+
 ## [0.5.0] - 2026-03-26
 
 ### Added
