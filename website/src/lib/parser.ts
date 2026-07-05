@@ -108,6 +108,7 @@ class Parser {
 
     if (this.peek() === ")") {
       this.advance();
+      this.validateUnits(children, operator);
       return children;
     }
 
@@ -116,6 +117,19 @@ class Parser {
     }
 
     throw this.error("expected operator or ')'");
+  }
+
+  validateUnits(children: Item[], operator: string): void {
+    const invalidUnit = operator === "|" ? "row" : "col";
+    const splitName = operator === "|" ? "horizontal (|)" : "vertical (/)";
+
+    for (const child of children) {
+      if (child.size?.unit === invalidUnit) {
+        throw this.error(
+          `'${invalidUnit}' unit is not valid in a ${splitName} split`
+        );
+      }
+    }
   }
 
   parsePanel(): Item {
