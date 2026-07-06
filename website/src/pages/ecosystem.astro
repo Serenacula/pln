@@ -11,38 +11,45 @@ const projects = [
   },
   {
     name: 'pln-kitty',
-    description: 'Kitty terminal plugin',
+    description: 'Kitty terminal plugin (single-file kitten)',
     language: 'Python',
-    status: 'Planned',
-    url: null,
+    status: 'Beta',
+    url: 'https://github.com/Serenacula/pln-kitty',
   },
   {
     name: 'pln-tmux',
-    description: 'tmux plugin',
-    language: 'Shell',
-    status: 'Planned',
-    url: null,
+    description: 'tmux plugin (TPM-compatible)',
+    language: 'Python',
+    status: 'Beta',
+    url: 'https://github.com/Serenacula/pln-tmux',
   },
   {
     name: 'pln-zellij',
-    description: 'Zellij plugin',
+    description: 'PLN to Zellij KDL layout converter',
     language: 'Rust',
-    status: 'Planned',
-    url: null,
+    status: 'Beta',
+    url: 'https://github.com/Serenacula/pln-zellij',
   },
   {
     name: 'pln-nvim',
     description: 'Neovim plugin',
     language: 'Lua',
-    status: 'Planned',
-    url: null,
+    status: 'Beta',
+    url: 'https://github.com/Serenacula/pln-nvim',
   },
   {
     name: 'pln-css',
-    description: 'PLN to CSS Grid converter',
+    description: 'PLN to CSS Grid compiler',
     language: 'TypeScript',
-    status: 'Planned',
-    url: null,
+    status: 'Beta',
+    url: 'https://github.com/Serenacula/pln-css',
+  },
+  {
+    name: 'pln-vscode',
+    description: 'VS Code / Cursor extension',
+    language: 'TypeScript',
+    status: 'Beta',
+    url: 'https://github.com/Serenacula/pln-vscode',
   },
 ];
 ---
@@ -146,10 +153,20 @@ const projects = [
     color: var(--color-text-muted);
   }
 
+  .status.beta {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
   @media (prefers-color-scheme: dark) {
     .status.published {
       background: #14532d;
       color: #86efac;
+    }
+
+    .status.beta {
+      background: #1e3a8a;
+      color: #93c5fd;
     }
   }
 

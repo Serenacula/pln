@@ -31,16 +31,17 @@ A standard IDE layout -- file tree, two editors, and a terminal:
 
 ## Ecosystem
 
-PLN is designed to be implemented across many tools. Planned integrations include:
+PLN is implemented across the whole toolchain:
 
 | Project | Description |
 |---------|-------------|
-| `pln-parse` | CLI parser and validator (Rust) |
-| `pln-kitty` | Kitty terminal plugin |
-| `pln-tmux` | tmux plugin |
-| `pln-zellij` | Zellij plugin |
-| `pln-nvim` | Neovim plugin |
-| `pln-css` | PLN to CSS Grid converter |
+| [`pln-parse`](https://crates.io/crates/pln-parse) | CLI parser and validator (Rust) |
+| [`pln-kitty`](https://github.com/Serenacula/pln-kitty) | Kitty terminal plugin (single-file kitten) |
+| [`pln-tmux`](https://github.com/Serenacula/pln-tmux) | tmux plugin (TPM-compatible) |
+| [`pln-zellij`](https://github.com/Serenacula/pln-zellij) | PLN to Zellij KDL layout converter (Rust) |
+| [`pln-nvim`](https://github.com/Serenacula/pln-nvim) | Neovim plugin (Lua) |
+| [`pln-css`](https://github.com/Serenacula/pln-css) | PLN to CSS Grid compiler (npm) |
+| [`pln-vscode`](https://github.com/Serenacula/pln-vscode) | VS Code / Cursor extension |
 
 ## License
 
